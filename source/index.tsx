@@ -129,11 +129,11 @@ function TextInput({
 			let nextCursorWidth = 0;
 
 			if (key.leftArrow) {
-				if (showCursor) {
+				if (showCursor && cursorOffset > 0) {
 					nextCursorOffset--;
 				}
 			} else if (key.rightArrow) {
-				if (showCursor) {
+				if (showCursor && cursorOffset < originalValue.length) {
 					nextCursorOffset++;
 				}
 			} else if (key.backspace || key.delete) {
