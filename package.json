@@ -83,6 +83,5 @@
 		"rules": {
 			"unicorn/prevent-abbreviations": "off"
 		}
-	},
-	"prettier": "@vdemedes/prettier-config"
+	}
 }

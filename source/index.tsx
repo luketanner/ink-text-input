@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import {Text, useInput} from 'ink';
+import React, { useState, useEffect } from 'react';
+import { Text, useInput } from 'ink';
 import chalk from 'chalk';
-import type {Except} from 'type-fest';
+import type { Except } from 'type-fest';
 
 export type Props = {
 	/**
@@ -61,7 +61,7 @@ function TextInput({
 		cursorWidth: 0,
 	});
 
-	const {cursorOffset, cursorWidth} = state;
+	const { cursorOffset, cursorWidth } = state;
 
 	useEffect(() => {
 		setState(previousState => {
@@ -100,10 +100,7 @@ function TextInput({
 		let i = 0;
 
 		for (const char of value) {
-			renderedValue +=
-				i >= cursorOffset - cursorActualWidth && i <= cursorOffset
-					? chalk.inverse(char)
-					: char;
+			renderedValue += i >= cursorOffset - cursorActualWidth && i <= cursorOffset ? chalk.inverse(char) : char;
 
 			i++;
 		}
@@ -115,13 +112,7 @@ function TextInput({
 
 	useInput(
 		(input, key) => {
-			if (
-				key.upArrow ||
-				key.downArrow ||
-				(key.ctrl && input === 'c') ||
-				key.tab ||
-				(key.shift && key.tab)
-			) {
+			if (key.upArrow || key.downArrow || (key.ctrl && input === 'c') || key.tab || (key.shift && key.tab)) {
 				return;
 			}
 
@@ -183,18 +174,10 @@ function TextInput({
 				onChange(nextValue);
 			}
 		},
-		{isActive: focus},
+		{ isActive: focus },
 	);
 
-	return (
-		<Text>
-			{placeholder
-				? value.length > 0
-					? renderedValue
-					: renderedPlaceholder
-				: renderedValue}
-		</Text>
-	);
+	return <Text>{placeholder ? (value.length > 0 ? renderedValue : renderedPlaceholder) : renderedValue}</Text>;
 }
 
 export default TextInput;
@@ -206,10 +189,7 @@ type UncontrolledProps = {
 	readonly initialValue?: string;
 } & Except<Props, 'value' | 'onChange'>;
 
-export function UncontrolledTextInput({
-	initialValue = '',
-	...props
-}: UncontrolledProps) {
+export function UncontrolledTextInput({ initialValue = '', ...props }: UncontrolledProps) {
 	const [value, setValue] = useState(initialValue);
 
 	return <TextInput {...props} value={value} onChange={setValue} />;
