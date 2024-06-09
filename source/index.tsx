@@ -222,6 +222,10 @@ function TextInput({
 					nextValue = originalValue.slice(start, cursorOffset) + originalValue.slice(cursorOffset + 1, end);
 					// `nextCursorOffset` remains unchanged
 				}
+			} else if (key.ctrl || key.meta) {
+				// Realistically, if the user is pressing `ctrl` or `meta`, they're almost certainly trying to perform a
+				// keyboard shortcut (even if it's not one that we've implemented), they're not trying to enter text.
+				return;
 			} else {
 				nextValue = originalValue.slice(start, cursorOffset) + input + originalValue.slice(cursorOffset, end);
 
