@@ -124,6 +124,10 @@ function TextInput({
 				return;
 			}
 
+			// Replace end-of-line sequences with regular spaces. This is primarily needed for newlines within pasted
+			// text, since they won't be caught by the `key.return` check above.
+			input = input.replace(/\r\n|\n/g, ' ');
+
 			let nextCursorOffset = cursorOffset;
 			let nextValue = originalValue;
 			let nextCursorWidth = 0;
