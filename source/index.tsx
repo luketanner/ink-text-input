@@ -110,6 +110,9 @@ function TextInput({
 		}
 	}
 
+	const start = 0;
+	const end = originalValue.length;
+
 	useInput(
 		(input, key) => {
 			if (key.upArrow || key.downArrow || (key.ctrl && input === 'c') || key.tab || (key.shift && key.tab)) {
@@ -133,26 +136,26 @@ function TextInput({
 			let nextCursorWidth = 0;
 
 			if (key.leftArrow) {
-				if (showCursor && cursorOffset > 0) {
+				if (showCursor && cursorOffset > start) {
 					nextCursorOffset--;
 				}
 			} else if (key.rightArrow) {
-				if (showCursor && cursorOffset < originalValue.length) {
+				if (showCursor && cursorOffset < end) {
 					nextCursorOffset++;
 				}
 			} else if (key.backspace || key.delete) {
-				if (cursorOffset > 0) {
+				if (cursorOffset > start) {
 					nextValue =
-						originalValue.slice(0, cursorOffset - 1) +
-						originalValue.slice(cursorOffset, originalValue.length);
+						originalValue.slice(start, cursorOffset - 1) +
+						originalValue.slice(cursorOffset, end);
 
 					nextCursorOffset--;
 				}
 			} else {
 				nextValue =
-					originalValue.slice(0, cursorOffset) +
+					originalValue.slice(start, cursorOffset) +
 					input +
-					originalValue.slice(cursorOffset, originalValue.length);
+					originalValue.slice(cursorOffset, end);
 
 				nextCursorOffset += input.length;
 
@@ -161,12 +164,12 @@ function TextInput({
 				}
 			}
 
-			if (cursorOffset < 0) {
-				nextCursorOffset = 0;
+			if (cursorOffset < start) {
+				nextCursorOffset = start;
 			}
 
-			if (cursorOffset > originalValue.length) {
-				nextCursorOffset = originalValue.length;
+			if (cursorOffset > end) {
+				nextCursorOffset = end;
 			}
 
 			setState({
